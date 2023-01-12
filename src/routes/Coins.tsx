@@ -72,6 +72,7 @@ const Coins = () => {
   useEffect(() => {
     (async () => {
       const response = await axios.get("https://api.coinpaprika.com/v1/coins");
+      console.log(response);
       setCoins(response.data.slice(0, 20));
       setLoading(false);
     })();
