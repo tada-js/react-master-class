@@ -66,17 +66,6 @@ interface CoinInterface {
 
 const Coins = () => {
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
-  // const [coins, setCoins] = useState<CoinInterface[]>([]);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await axios.get("https://api.coinpaprika.com/v1/coins");
-  //     console.log(response);
-  //     setCoins(response.data.slice(0, 20));
-  //     setLoading(false);
-  //   })();
-  // }, []);
 
   return (
     <Container>
