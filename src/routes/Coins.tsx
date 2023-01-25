@@ -1,8 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { createFalse } from "typescript";
+import { fetchCoins } from "../api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -66,27 +65,29 @@ interface CoinInterface {
 }
 
 const Coins = () => {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
+  // const [coins, setCoins] = useState<CoinInterface[]>([]);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      const response = await axios.get("https://api.coinpaprika.com/v1/coins");
-      console.log(response);
-      setCoins(response.data.slice(0, 20));
-      setLoading(false);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await axios.get("https://api.coinpaprika.com/v1/coins");
+  //     console.log(response);
+  //     setCoins(response.data.slice(0, 20));
+  //     setLoading(false);
+  //   })();
+  // }, []);
+
   return (
     <Container>
       <Header>
         <Title>코인</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>"Loading..."</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 10).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{ pathname: `/${coin.id}`, state: { name: coin.name } }}
